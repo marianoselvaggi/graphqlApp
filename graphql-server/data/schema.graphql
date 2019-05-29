@@ -1,0 +1,43 @@
+type Cliente {
+    id: ID
+    nombre: String
+    apellido: String
+    empresa: String
+    email: String
+    tipo: TipoCliente
+    pedidos: [Pedido]
+}
+enum TipoCliente {
+    BASICO
+    PREMIUM
+}
+type Pedido {
+    nombre: String
+    precio: Int
+}
+type Query {
+    getCliente(id: String): Cliente
+}
+input PedidoInput {
+    nombre: String!
+    precio: Int!
+}
+""" Campos para cliente """
+input ClienteInput {
+    id: ID
+    nombre: String!
+    apellido: String!
+    empresa: String!
+    email: String!
+    tipo: TipoCliente!
+    pedidos: [PedidoInput]
+}
+""" Mutuations de la app """    
+type Mutation {
+    """ Mutuation para crear cliente """
+    crearCliente(input: ClienteInput): Cliente,
+    """ Mutuation para actualizar cliente """
+    actualizarCliente(input: ClienteInput): Cliente,
+    """ Mutuation para borrar cliente """
+    borrarCliente(id: ID): String
+}
