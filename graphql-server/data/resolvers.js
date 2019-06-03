@@ -2,6 +2,15 @@ import { Clientes } from './db';
 
 export const resolvers = {
     Query: {
+        getClientes: async(root, { limite }) => {
+            try {
+                const clientes = await Clientes.find().limit(limite);
+                return clientes;
+               
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        },
         getCliente: async(root, { id }) => {
             try {
                 const client = await Clientes.findById(id);

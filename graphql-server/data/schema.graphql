@@ -15,7 +15,10 @@ type Pedido {
     nombre: String
     precio: Int
 }
+""" Queries para cliente """
 type Query {
+    """ Obtengo todos los clientes """
+    getClientes(limite: Int): [Cliente],
     getCliente(id: String): Cliente
 }
 input PedidoInput {
