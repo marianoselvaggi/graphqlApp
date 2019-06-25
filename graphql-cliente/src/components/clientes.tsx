@@ -19,7 +19,6 @@ const Clientes = () =>(
         {({ loading, error, data }) => {
             if (loading) return 'cargando...'
             if (error) return `Error: ${error.message}`
-            console.log(data);
 
             return (
                 <Fragment>

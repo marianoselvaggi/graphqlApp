@@ -1,18 +1,16 @@
 type Cliente {
     id: ID
     nombre: String
+    edad: Int
     apellido: String
     empresa: String
-    emails: [Email]
+    email: String
     tipo: TipoCliente
     pedidos: [Pedido]
 }
 enum TipoCliente {
     BASICO
     PREMIUM
-}
-type Email {
-    email: String!
 }
 type Pedido {
     nombre: String
@@ -24,9 +22,6 @@ type Query {
     getClientes(limite: Int): [Cliente],
     getCliente(id: String): Cliente
 }
-input EmailInput {
-    email: String!
-}
 input PedidoInput {
     nombre: String!
     precio: Int!
@@ -35,9 +30,10 @@ input PedidoInput {
 input ClienteInput {
     id: ID
     nombre: String!
+    edad: Int
     apellido: String!
     empresa: String!
-    emails: [EmailInput]!
+    email: String!
     tipo: TipoCliente!
     pedidos: [PedidoInput]
 }
