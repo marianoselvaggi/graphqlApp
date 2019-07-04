@@ -4,7 +4,7 @@ type Cliente {
     edad: Int
     apellido: String
     empresa: String
-    email: String
+    email: [Email]!
     tipo: TipoCliente
     pedidos: [Pedido]
 }
@@ -16,6 +16,9 @@ type Pedido {
     nombre: String
     precio: Int
 }
+type Email {
+    email: String!
+}
 """ Queries para cliente """
 type Query {
     """ Obtengo todos los clientes """
@@ -26,6 +29,9 @@ input PedidoInput {
     nombre: String!
     precio: Int!
 }
+input EmailInput {
+    email: String!
+}
 """ Campos para cliente """
 input ClienteInput {
     id: ID
@@ -33,7 +39,7 @@ input ClienteInput {
     edad: Int
     apellido: String!
     empresa: String!
-    email: String!
+    emails: [EmailInput]!
     tipo: TipoCliente!
     pedidos: [PedidoInput]
 }
