@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
 
 export const NUEVO_CLIENTE = gql`
-
 mutation crearCliente($input: ClienteInput) {
     crearCliente(input: $input) {
       id
@@ -9,5 +8,15 @@ mutation crearCliente($input: ClienteInput) {
       apellido
       edad
     }
-}
-`;
+}`;
+
+export const ACTUALIZAR_CLIENTE = gql`
+mutation actualizarCliente($input: ClienteInput) {
+  actualizarCliente (input: $input) {
+    id
+      nombre
+      apellido
+      edad
+  }
+}`;
+

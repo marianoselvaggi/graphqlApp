@@ -46,6 +46,7 @@ export const resolvers = {
                 client.nombre = input.nombre;
                 client.apellido = input.apellido;
                 client.emails = input.emails;
+                client.edad = input.edad,
                 client.empresa = input.empresa;
                 client.tipo = input.tipo;
                 return await client.save();
