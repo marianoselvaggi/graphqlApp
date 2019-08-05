@@ -28,13 +28,14 @@ const EditarCliente = (props: any) => {
             
             <div className='row justify-content-center'>
                 <Query<Data> query={CLIENTE_QUERY} variables={{id}}>
-                    {({ loading, error, data}) => {
+                    {({ loading, error, data, refetch}) => {
                         if (loading) return 'Cargando...';
                         if (error) return `Error ${error.message}`;
 
                         return (
                             <FormularioEditar
                                 cliente={{
+                                    id,
                                     nombre: data!.getCliente.nombre,
                                     apellido: data!.getCliente.apellido,
                                     empresa: data!.getCliente.empresa,
@@ -42,6 +43,7 @@ const EditarCliente = (props: any) => {
                                     emails: data!.getCliente.emails,
                                     tipo: data!.getCliente.tipo
                                 }}
+                                refetch={refetch}
                             />
                         )
                     }

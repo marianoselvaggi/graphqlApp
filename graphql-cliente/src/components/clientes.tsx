@@ -15,7 +15,7 @@ interface Cliente {
 }
 
 const Clientes = () =>(
-    <Query<Data> query={CLIENTES_QUERY} pollInterval={500}>
+    <Query<Data> query={CLIENTES_QUERY} pollInterval={100}>
         {({ loading, error, data, startPolling, stopPolling }) => {
             if (loading) return 'cargando...'
             if (error) return `Error: ${error.message}`

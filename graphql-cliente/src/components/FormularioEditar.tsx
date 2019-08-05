@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import {ACTUALIZAR_CLIENTE} from ''
+import {ACTUALIZAR_CLIENTE} from '../mutations';
+import { Mutation } from 'react-apollo';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-interface FormularioProps {
+interface iFormularioProps extends RouteComponentProps {
     cliente: {
+        id: string,
         nombre: string,
         apellido: string,
         empresa: string,
@@ -11,10 +14,11 @@ interface FormularioProps {
             email: string
         }>,
         tipo: string
-    }
+    },
+    refetch: any
 }
 
-interface FormularioState {
+interface iFormularioState {
     cliente: {
         nombre: string,
         apellido: string,
@@ -27,13 +31,14 @@ interface FormularioState {
     }>
 }
 
-class FormularioEditar extends Component<FormularioProps> {
+class FormularioEditar extends Component<iFormularioProps> {
     
     static defaultProps = {
-        cliente: {}
+        cliente: {},
+        history: {}
     }
     
-    state: FormularioState =  {
+    state: iFormularioState =  {
         cliente: this.props.cliente,
         emails: this.props.cliente.emails
     }
@@ -64,8 +69,36 @@ class FormularioEditar extends Component<FormularioProps> {
             const {nombre, apellido, empresa, edad, tipo} = this.state.cliente;
            
             return (
-        
-                   <form className="col-md-8 m-3">
+
+                <Mutation mutation={ACTUALIZAR_CLIENTE}
+                    onCompleted={() => {
+                        this.props.refetch().then(() => {
+                            this.props.history.push('/');
+                        });
+                    }
+                }>
+                    {
+                        (actualizarCliente: any) => (
+                            <form className="col-md-8 m-3" onSubmit={e => {
+                                e.preventDefault();
+                                const { nombre, apellido, empresa, edad, tipo } = this.state.cliente;
+                                const { emails } = this.state;
+                                const input = {
+                                    id: this.props.cliente.id,
+                                    nombre,
+                                    apellido,
+                                    empresa,
+                                    edad,
+                                    tipo,
+                                    emails
+                                }
+
+                                actualizarCliente({
+                                    variables: {
+                                        input
+                                    }
+                                });
+                            }}>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre</label>
@@ -189,8 +222,11 @@ class FormularioEditar extends Component<FormularioProps> {
                             </div>
                             <button type="submit" className="btn btn-success float-right">Guardar Cambios</button>
                         </form>
+                        )
+                    }
+                </Mutation>
             )      
     }
 }
 
-export default FormularioEditar;
+export default withRouter<any>(FormularioEditar);
