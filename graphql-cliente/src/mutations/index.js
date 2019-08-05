@@ -20,3 +20,8 @@ mutation actualizarCliente($input: ClienteInput) {
   }
 }`;
 
+export const BORRAR_CLIENTE = gql`
+mutation borrarCliente($id: ID) {
+  borrarCliente (id: $id)
+}
+`;

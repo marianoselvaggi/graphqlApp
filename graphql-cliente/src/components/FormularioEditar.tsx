@@ -88,7 +88,7 @@ class FormularioEditar extends Component<iFormularioProps> {
                                     nombre,
                                     apellido,
                                     empresa,
-                                    edad,
+                                    edad: Number(edad),
                                     tipo,
                                     emails
                                 }

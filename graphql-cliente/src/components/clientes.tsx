@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import { CLIENTES_QUERY } from '../queries';
+import { BORRAR_CLIENTE } from '../mutations';
 
 interface Data {
     getClientes: [Cliente]
@@ -15,7 +16,7 @@ interface Cliente {
 }
 
 const Clientes = () =>(
-    <Query<Data> query={CLIENTES_QUERY} pollInterval={100}>
+    <Query<Data> query={CLIENTES_QUERY} pollInterval={1000}>
         {({ loading, error, data, startPolling, stopPolling }) => {
             if (loading) return 'cargando...'
             if (error) return `Error: ${error.message}`
@@ -31,6 +32,23 @@ const Clientes = () =>(
                                         {item.nombre} {item.apellido} {` - ${item.empresa}`}
                                     </div>
                                     <div className="col-md-4 d-flex justify-content-end">
+                                        <Mutation mutation={BORRAR_CLIENTE}>
+                                            {(borrarCliente: any) => (
+                                                <button type="button" className="btn btn-danger d-block d-md-inline-block mr-2"
+                                                    onClick={() => {
+                                                        if(window.confirm('Seguro que desea eliminar este registro?')) {
+                                                            borrarCliente({
+                                                                variables: {
+                                                                    id: item.id
+                                                                }
+                                                            });
+                                                        }
+                                                    }}>
+                                                        
+                                                    &times;Eliminar Cliente
+                                                </button>
+                                            )}
+                                        </Mutation>
                                         <Link to={`/cliente/editar/${item.id}`} className="btn btn-success d-block d-md-inline-block">
                                             Editar Cliente
                                         </Link>
