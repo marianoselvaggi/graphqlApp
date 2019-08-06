@@ -1,11 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Query, Mutation } from 'react-apollo';
 import { CLIENTES_QUERY } from '../queries';
 import { BORRAR_CLIENTE } from '../mutations';
+import Paginador from './paginador';
 
 interface Data {
-    getClientes: [Cliente]
+    getClientes: [Cliente],
+    totalClientes: number
 };
 
 interface Cliente {
@@ -15,12 +17,26 @@ interface Cliente {
     empresa: string;
 }
 
-const Clientes = () =>(
-    <Query<Data> query={CLIENTES_QUERY} pollInterval={1000}>
+interface iStateClientes {
+    paginador: {
+        pagina: number,
+        offset: number
+    }
+}
+
+const Clientes = () => {
+    const defaultValues: iStateClientes = {
+        paginador: {
+            pagina: 1,
+            offset: 0
+        }
+    };
+    const [ paginador, setPaginador ] = useState(defaultValues);
+    return(<Query<Data> query={CLIENTES_QUERY} pollInterval={1000}>
         {({ loading, error, data, startPolling, stopPolling }) => {
             if (loading) return 'cargando...'
             if (error) return `Error: ${error.message}`
-
+            console.log(data);
             return (
                 <Fragment>
                     <h2 className="text-center mb-4">Listado Clientes</h2>
@@ -57,10 +73,15 @@ const Clientes = () =>(
                             </li>
                         ))}
                     </ul>
+                    <Paginador
+                        actual={paginador.paginador.pagina}
+                        total={data!.totalClientes}
+                        limite={1}
+                    />
                 </Fragment>
             )
         }} 
-    </Query>
-);
+    </Query>);
+};
 
 export default Clientes;

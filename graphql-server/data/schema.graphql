@@ -22,8 +22,9 @@ type Email {
 """ Queries para cliente """
 type Query {
     """ Obtengo todos los clientes """
-    getClientes(limite: Int): [Cliente],
-    getCliente(id: String): Cliente
+    getClientes(limite: Int, offset: Int): [Cliente],
+    getCliente(id: String): Cliente,
+    totalClientes: Int
 }
 input PedidoInput {
     nombre: String!

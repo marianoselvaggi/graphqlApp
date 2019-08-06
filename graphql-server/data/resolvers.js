@@ -2,9 +2,9 @@ import { Clientes } from './db';
 
 export const resolvers = {
     Query: {
-        getClientes: async(root, { limite }) => {
+        getClientes: async(root, { limite, offset }) => {
             try {
-                const clientes = await Clientes.find().limit(limite);
+                const clientes = await Clientes.find().limit(limite).skip(offset);
                 return clientes;
                
             } catch (err) {
@@ -23,6 +23,14 @@ export const resolvers = {
                 throw new Error(err.message);
             }
         },
+        totalClientes: async(root, {}) => {
+            try {
+                const total = await Clientes.countDocuments();
+                return total;
+            } catch (err) {
+                throw new Error(err.message);   
+            }
+        }
     },
     Mutation: {
         crearCliente: async (root, { input }) => {  
