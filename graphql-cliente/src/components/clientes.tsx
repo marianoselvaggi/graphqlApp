@@ -25,18 +25,40 @@ interface iStateClientes {
 }
 
 const Clientes = () => {
+    const limite = 2;
+
     const defaultValues: iStateClientes = {
         paginador: {
             pagina: 1,
             offset: 0
         }
     };
+
     const [ paginador, setPaginador ] = useState(defaultValues);
-    return(<Query<Data> query={CLIENTES_QUERY} pollInterval={1000}>
+
+    const clickAnterior = () => {
+        setPaginador({
+            paginador: {
+                pagina: paginador.paginador.pagina - 1,
+                offset: paginador.paginador.offset - limite
+            }
+        });
+    }
+    
+    const clickSiguiente = () => {
+        setPaginador({
+            paginador: {
+                pagina: paginador.paginador.pagina + 1,
+                offset: paginador.paginador.offset + limite
+            }
+        });
+    }
+
+    return(<Query<Data> query={CLIENTES_QUERY} pollInterval={1000} variables={{limite: limite, offset: paginador.paginador.offset}}>
         {({ loading, error, data, startPolling, stopPolling }) => {
             if (loading) return 'cargando...'
             if (error) return `Error: ${error.message}`
-            console.log(data);
+
             return (
                 <Fragment>
                     <h2 className="text-center mb-4">Listado Clientes</h2>
@@ -76,7 +98,9 @@ const Clientes = () => {
                     <Paginador
                         actual={paginador.paginador.pagina}
                         total={data!.totalClientes}
-                        limite={1}
+                        limite={limite}
+                        clickAnterior={clickAnterior}
+                        clickSiguiente={clickSiguiente}
                     />
                 </Fragment>
             )
