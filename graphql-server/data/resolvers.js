@@ -1,4 +1,4 @@
-import { Clientes } from './db';
+import { Clientes, Productos } from './db';
 
 export const resolvers = {
     Query: {
@@ -29,6 +29,30 @@ export const resolvers = {
                 return total;
             } catch (err) {
                 throw new Error(err.message);   
+            }
+        },
+        getProductos: async(root, { limite, offset }) => {
+            try {
+                const productos = await Productos.find().limit(limite).skip(offset);
+                return productos;
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        },
+        getProducto: async(root, { id }) => {
+            try {
+                const producto = await Productos.findById(id);
+                return producto;
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        },
+        totalProductos: async(root, {}) => {
+            try {
+                const total = await Productos.countDocuments();
+                return total;
+            } catch (err) {
+                throw new Error(err.message);
             }
         }
     },
@@ -72,6 +96,45 @@ export const resolvers = {
                 return "success";
             } catch (err) {
                 throw new Error(err.message);
+            }
+        },
+        nuevoProducto: async (root, {input}) => {
+            try {
+                const nuevoProducto = new Productos({
+                    nombre: input.nombre,
+                    precio: input.precio,
+                    stock: input.stock
+                });
+                nuevoProducto.id = nuevoProducto._id;
+                return await nuevoProducto.save();
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        },
+        actualizarProducto: async(root, {input}) => {
+            try {
+                const product = await Productos.findById(input.id);
+                if (!product) {
+                    throw new Error('Product not found.');
+                }
+                product.nombre = input.nombre || product.nombre;
+                product.precio = input.precio || product.precio;
+                product.stock = input.stock || product.stock;
+                return await product.save();
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        },
+        borrarProducto: async(root, {id}) => {
+            try {
+                const product = await Productos.findById(id);
+                if (!product) {
+                    throw new Error('Product not found.');
+                }
+                await product.remove();
+                return 'success';
+            } catch (err) {
+                throw new Error(err);
             }
         }
     }
