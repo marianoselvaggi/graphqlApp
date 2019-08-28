@@ -1,4 +1,4 @@
-import { Clientes, Productos } from './db';
+import { Clientes, Productos } from "./db";
 
 export const resolvers = {
     Query: {
@@ -16,14 +16,15 @@ export const resolvers = {
                 const client = await Clientes.findById(id);
 
                 if (!client) {
-                    throw new Error('Client not found.');
+                    throw new Error("Client not found.");
                 }
                 return client;
             } catch (err) {
                 throw new Error(err.message);
             }
         },
-        totalClientes: async(root, {}) => {
+        // eslint-disable-next-line no-unused-vars
+        totalClientes: async() => {
             try {
                 const total = await Clientes.countDocuments();
                 return total;
@@ -47,7 +48,7 @@ export const resolvers = {
                 throw new Error(err.message);
             }
         },
-        totalProductos: async(root, {}) => {
+        totalProductos: async() => {
             try {
                 const total = await Productos.countDocuments();
                 return total;
@@ -73,7 +74,7 @@ export const resolvers = {
             try {
                 const client = await Clientes.findById(input.id);
                 if (!client) {
-                    throw new Error('Client not found.');
+                    throw new Error("Client not found.");
                 }
                 client.nombre = input.nombre;
                 client.apellido = input.apellido;
@@ -90,7 +91,7 @@ export const resolvers = {
             try {
                 const client = await Clientes.findById(id);
                 if (!client) {
-                    throw new Error('Cliente not found.');
+                    throw new Error("Cliente not found.");
                 }
                 await client.remove();
                 return "success";
@@ -115,7 +116,7 @@ export const resolvers = {
             try {
                 const product = await Productos.findById(input.id);
                 if (!product) {
-                    throw new Error('Product not found.');
+                    throw new Error("Product not found.");
                 }
                 product.nombre = input.nombre || product.nombre;
                 product.precio = input.precio || product.precio;
@@ -129,13 +130,13 @@ export const resolvers = {
             try {
                 const product = await Productos.findById(id);
                 if (!product) {
-                    throw new Error('Product not found.');
+                    throw new Error("Product not found.");
                 }
                 await product.remove();
-                return 'success';
+                return "success";
             } catch (err) {
                 throw new Error(err);
             }
         }
     }
-}
+};

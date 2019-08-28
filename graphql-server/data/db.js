@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/clientes', {useNewUrlParser: true});
-mongoose.set('setFindAndModify', false);
+import mongoose from "mongoose";
+mongoose.connect("mongodb://localhost/clientes", {useNewUrlParser: true});
+mongoose.set("setFindAndModify", false);
 
 // definir el schema de clientes
 
@@ -23,7 +22,7 @@ const productosSchema = new mongoose.Schema({
     stock: Number
 });
 
-const Clientes = mongoose.model('Clientes', clientesSchema);
-const Productos = mongoose.model('productos', productosSchema);
+const Clientes = mongoose.model("Clientes", clientesSchema);
+const Productos = mongoose.model("productos", productosSchema);
 
 export { Clientes, Productos };
