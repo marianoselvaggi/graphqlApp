@@ -23,5 +23,9 @@ mutation actualizarCliente($input: ClienteInput) {
 export const BORRAR_CLIENTE = gql`
 mutation borrarCliente($id: ID) {
   borrarCliente (id: $id)
-}
-`;
+}`;
+
+export const BORRAR_PRODUCTO = gql`
+mutation borrarProducto($id: ID) {
+  borrarProducto (id: $id)
+}`;

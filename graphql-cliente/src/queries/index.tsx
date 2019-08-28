@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 export const CLIENTES_QUERY = gql`
   query getClientes($limite: Int, $offset: Int) {
     getClientes(limite: $limite, offset: $offset) {
+      id
       nombre
       apellido
       edad
@@ -28,5 +29,16 @@ export const CLIENTE_QUERY = gql`
         email
       }
     }
+  }
+`;
+
+export const PRODUCTOS_QUERY = gql`
+  query getProductos($limite: Int, $offset: Int) {
+    getProductos(limite: $limite,offset: $offset) {
+      id
+      nombre
+      precio
+    }
+    totalProductos
   }
 `;

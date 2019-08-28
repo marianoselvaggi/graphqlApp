@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Query, Mutation } from 'react-apollo';
-import { CLIENTES_QUERY } from '../queries';
-import { BORRAR_CLIENTE } from '../mutations';
-import Paginador from './paginador';
+import { CLIENTES_QUERY } from '../../queries';
+import { BORRAR_CLIENTE } from '../../mutations';
+import Paginador from '../paginador';
 
 interface Data {
     getClientes: [Cliente],
@@ -25,7 +25,7 @@ interface iStateClientes {
 }
 
 const Clientes = () => {
-    const limite = 2;
+    const limite = 5;
 
     const defaultValues: iStateClientes = {
         paginador: {

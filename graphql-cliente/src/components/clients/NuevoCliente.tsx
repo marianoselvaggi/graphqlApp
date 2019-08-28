@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { NUEVO_CLIENTE } from '../mutations';
+import { NUEVO_CLIENTE } from '../../mutations';
 import { Mutation } from 'react-apollo';
 
 interface iEmail {
