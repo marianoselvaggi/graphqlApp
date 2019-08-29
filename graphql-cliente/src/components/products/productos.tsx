@@ -25,39 +25,47 @@ const Productos = (props: any) => {
               return (
                   <Fragment>
                       <h2 className="text-center mb-4">Listado Productos</h2>
-                    <ul className="list-group">
-                        {data!.getProductos.map(item => (
-                            <li key={item.id} className="list-group-item">
-                                <div className="row justify-content-between align-items-center">
-                                    <div className="col-md-8 d-flex justify-content-between align-items-center">
-                                        {item.nombre} {` - ${item.precio} - ${item.stock}`}
-                                    </div>
-                                    <div className="col-md-4 d-flex justify-content-end">
+                      <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data!.getProductos.map(item => (
+                                <tr>
+                                    <td>{item.nombre}</td>
+                                    <td>{item.precio}</td>
+                                    <td>{item.stock}</td>
+                                    <td>
                                         <Mutation mutation={BORRAR_PRODUCTO}>
-                                        {(borrarProducto: any) => (
-                                            <button type="button" className="btn btn-danger d-block d-md-inline-block mr-2"
-                                            onClick={() => {
-                                                if(window.confirm('Seguro que desea eliminar este registro?')) {
-                                                    borrarProducto({
-                                                        variables: {
-                                                            id: item.id
-                                                        }
-                                                    });
-                                                }
-                                            }}>
-                                                
-                                            &times;Eliminar Producto
-                                        </button>
-                                        )}
-                                    </Mutation>
+                                            {(borrarProducto: any) => (
+                                                <button type="button" className="btn btn-danger d-block d-md-inline-block mr-2"
+                                                onClick={() => {
+                                                    if(window.confirm('Seguro que desea eliminar este registro?')) {
+                                                        borrarProducto({
+                                                            variables: {
+                                                                id: item.id
+                                                            }
+                                                        });
+                                                    }
+                                                }}>
+                                                    
+                                                &times;Eliminar Producto
+                                            </button>
+                                            )}
+                                        </Mutation>
                                         <Link to={`/productos/editar/${item.id}`} className="btn btn-success d-block d-md-inline-block">
                                             Editar Producto
                                         </Link>
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                      </table>
                   </Fragment>
               );
         }}

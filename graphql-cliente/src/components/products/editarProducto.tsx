@@ -25,7 +25,7 @@ const EditarProducto = (props: any) => {
             
             return (
                 <Fragment>
-                    <h1>Editar Producto</h1>
+                    <h2 className="text-center">Editar Producto</h2>   
                     <FormularioEditarProducto producto={{id, nombre, precio, stock}} refetch={refetch} history={props.history} />
                 </Fragment>
             );

@@ -38,8 +38,7 @@ const FormularioEditarProducto = (props: iProps) => {
 
     return (
         <Fragment>
-            {errorMsje}
-            <h2 className="text-center">Nuevo Producto</h2>        
+            {errorMsje}     
             <div className="row justify-content-center">
                 <Mutation mutation={ACTUALIZAR_PRODUCTO}
                     onCompleted={() => {
