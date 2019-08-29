@@ -1,22 +1,22 @@
 import React, { useState, Fragment } from 'react';
-import { NUEVO_PRODUCTO } from '../../mutations';
+import { ACTUALIZAR_PRODUCTO } from '../../mutations';
 import { Mutation } from 'react-apollo';
 
 interface iProducto {
+    id: string,
     nombre: string,
     precio: number,
     stock: number
 }
 
-const NuevoProducto = (props: { history: any; }) => {
+interface iProps {
+    producto: iProducto,
+    refetch: any,
+    history: any
+}
 
-    const defaultProducto: iProducto = {
-        nombre: '',
-        precio: 0,
-        stock: 0
-    };
-
-    const [ producto, setProducto ] = useState(defaultProducto);
+const FormularioEditarProducto = (props: iProps) => {
+    const [ producto, setProducto ] = useState(props.producto);
     const [ error, setError ] = useState(false);
 
     const updateValues = (e: any) => {
@@ -41,9 +41,14 @@ const NuevoProducto = (props: { history: any; }) => {
             {errorMsje}
             <h2 className="text-center">Nuevo Producto</h2>        
             <div className="row justify-content-center">
-                <Mutation mutation={NUEVO_PRODUCTO}
-                    onCompleted={() => (props.history.push('/productos'))}>
-                    {(nuevoProducto: any) => (
+                <Mutation mutation={ACTUALIZAR_PRODUCTO}
+                    onCompleted={() => {
+                        props.refetch().then(() => {
+                            props.history.push('/productos/');
+                        });
+                    }}
+                >
+                    {(actualizarProducto: any) => (
                         <form className="col-md-8" onSubmit={e => {
                             e.preventDefault();
                             const { nombre, precio, stock } = producto;
@@ -54,11 +59,12 @@ const NuevoProducto = (props: { history: any; }) => {
                                 setError(false);
                             }
                             const input = {
+                                id: producto.id,
                                 nombre: producto.nombre,
                                 precio: parseInt(producto.precio.toString()),
                                 stock: parseInt(producto.stock.toString())
                             };
-                            nuevoProducto({
+                            actualizarProducto({
                                 variables: {
                                     input
                                 }
@@ -68,7 +74,8 @@ const NuevoProducto = (props: { history: any; }) => {
                                 <label>Nombre:</label>
                                 <input 
                                     type="text"
-                                    name="nombre" 
+                                    name="nombre"
+                                    defaultValue={producto.nombre}
                                     className="form-control" 
                                     placeholder="Nombre del Producto"
                                     onChange={(e) => updateValues(e)}
@@ -82,7 +89,8 @@ const NuevoProducto = (props: { history: any; }) => {
                                     </div>
                                     <input 
                                         type="number" 
-                                        name="precio" 
+                                        name="precio"
+                                        defaultValue={producto.precio.toString()}
                                         className="form-control" 
                                         placeholder="Precio del Producto"
                                         onChange={(e) => updateValues(e)}
@@ -94,7 +102,8 @@ const NuevoProducto = (props: { history: any; }) => {
                                 <input 
                                     type="number" 
                                     name="stock" 
-                                    className="form-control" 
+                                    className="form-control"
+                                    defaultValue={producto.stock.toString()}
                                     placeholder="stock del Producto"
                                     onChange={(e) => updateValues(e)}
                                 />
@@ -103,7 +112,7 @@ const NuevoProducto = (props: { history: any; }) => {
                                 disabled={validateProduct()}
                                 type="submit" 
                                 className="btn btn-success float-right">
-                                    Crear Producto
+                                    Actualizar Producto
                             </button>
                         </form>
                     )}
@@ -113,4 +122,4 @@ const NuevoProducto = (props: { history: any; }) => {
     )
 };
 
-export default NuevoProducto;
+export default FormularioEditarProducto;

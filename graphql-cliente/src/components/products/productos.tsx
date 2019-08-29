@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { PRODUCTOS_QUERY } from '../../queries';
 import { Query, Mutation } from 'react-apollo';
 import { BORRAR_PRODUCTO } from '../../mutations';

@@ -29,3 +29,23 @@ export const BORRAR_PRODUCTO = gql`
 mutation borrarProducto($id: ID) {
   borrarProducto (id: $id)
 }`;
+
+export const NUEVO_PRODUCTO =gql`
+mutation nuevoProducto ($input: ProductoInput) {
+  nuevoProducto(input: $input) {
+    id
+    nombre
+    precio
+    stock
+  }
+}`;
+
+export const ACTUALIZAR_PRODUCTO =gql`
+mutation actualizarProducto ($input: ProductoInput) {
+  actualizarProducto(input: $input) {
+    id
+    nombre
+    precio
+    stock
+  }
+}`;
