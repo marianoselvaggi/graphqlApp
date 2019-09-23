@@ -45,7 +45,7 @@ const NuevoCliente = (props: { history: any; }) => {
         <h2 className="text-center">Nuevo Cliente</h2>
         <div className="row justify-content-center">
             <Mutation mutation={NUEVO_CLIENTE}
-                onCompleted={() => (props.history.push('/'))}
+                onCompleted={() => (props.history.push('/clientes'))}
             >
                 { (crearCliente: any) => (
                     <form 

@@ -4,6 +4,7 @@ import { Query, Mutation } from 'react-apollo';
 import { BORRAR_PRODUCTO } from '../../mutations';
 import { Link } from 'react-router-dom';
 import Exito from '../alertas/exito';
+import Paginador from '../paginador';
 
 interface Data {
     getProductos: [Producto],
@@ -18,11 +19,31 @@ interface Producto {
 }
 
 const Productos = (props: any) => {
+    const limite = 2;
 
     const [ alerta, setAlerta ] = useState({
         mostrar: false,
         message: ''
     });
+
+    const [ paginador, setPaginador ] = useState({
+        pagina: 1,
+        offset: 0
+    });
+
+    const clickAnterior = () => {
+        setPaginador({
+            pagina: paginador.pagina - 1,
+            offset: paginador.offset - limite
+        });
+    };
+
+    const clickSiguiente = () => {
+        setPaginador({
+            pagina: paginador.pagina + 1,
+            offset: paginador.offset + limite
+        });
+    };
 
     useEffect(
         () => {
@@ -37,10 +58,11 @@ const Productos = (props: any) => {
         }
     );
 
-    return (<Query<Data> query={PRODUCTOS_QUERY} pollInterval={1000}>
+    return (<Query<Data> query={PRODUCTOS_QUERY} pollInterval={1000} variables={{limite: limite, offset: paginador.offset}}>
         {({ loading, error, data }) => {
               if (loading) return 'cargando...'
               if (error) return `Error: ${error.message}`
+
               const alert = alerta.mostrar ? <Exito message={alerta.message} /> : '';
               return (
                   <Fragment>
@@ -94,6 +116,13 @@ const Productos = (props: any) => {
                             ))}
                         </tbody>
                       </table>
+                      <Paginador 
+                        actual={paginador.pagina}
+                        total={data!.totalProductos}
+                        limite={limite}
+                        clickAnterior={clickAnterior}
+                        clickSiguiente={clickSiguiente}
+                      />
                   </Fragment>
               );
         }}

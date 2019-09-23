@@ -70,6 +70,9 @@ const Clientes = () => {
                                         {item.nombre} {item.apellido} {` - ${item.empresa}`}
                                     </div>
                                     <div className="col-md-4 d-flex justify-content-end">
+                                        <Link to={`/pedidos/nuevo/${item.id}`} className="btn btn-warning d-block d-md-inline-block">
+                                            Nuevo Pedido
+                                        </Link>
                                         <Mutation mutation={BORRAR_CLIENTE}>
                                             {(borrarCliente: any) => (
                                                 <button type="button" className="btn btn-danger d-block d-md-inline-block mr-2"

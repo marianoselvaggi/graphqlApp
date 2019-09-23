@@ -7,23 +7,35 @@ const Header = () => (
             <Link className="navbar-brand text-light font-weight-bold" to="/">
                 CRM
             </Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navegacion" aria-controls="navegacion" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="navegacion">
-                <ul className="navbar-nav ml-auto text-right">
-                    <li className="nav-item active">
-                        <Link to='/cliente/nuevo' className="btn btn-success mr-2">
-                            Nuevo Cliente
+            <div className="d-flex mr-4">
+                <div className="dropdown">
+                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuClients"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Productos
+                        </button>    
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuClients">
+                        <Link to='/productos' className="dropdown-item">
+                            Ver Productos
                         </Link>
-                    </li>
-                    <li className="nav-item active">
-                        <Link to='/productos/nuevo' className="btn btn-success">
+                        <Link to='/productos/nuevo' className="dropdown-item">
                             Nuevo Producto
                         </Link>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+                <div className="dropdown">
+                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuProducts"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Clientes
+                    </button>    
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuProducts">
+                    <Link to='/clientes' className="dropdown-item">
+                        Ver Clientes
+                    </Link>
+                    <Link to='/clientes/nuevo' className="dropdown-item">
+                        Nuevo Cliente
+                    </Link>
+                </div>
+            </div>
             </div>
         </div>
     </nav>
